@@ -2,6 +2,7 @@
 setlocal enabledelayedexpansion
 title TL Localization
 
+
 :: ─────────────────────────────────────────────────────────────────────────────
 set "REPO_API=https://api.github.com/repos/ferraghue/tl-localization/contents"
 set "REPO_RAW=https://raw.githubusercontent.com/ferraghue/tl-localization/main"
