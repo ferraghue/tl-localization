@@ -1,0 +1,33 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - tl_localization.bat
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build zip
+        run: zip tl_localization.zip tl_localization.bat
+
+      - name: Create tag
+        id: tag
+        run: |
+          TAG="v$(date +%Y.%m.%d)-${GITHUB_SHA::7}"
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.tag }}
+          name: TL Localization ${{ steps.tag.outputs.tag }}
+          body: "tl_localization.bat updated — ${{ github.sha }}"
+          files: tl_localization.zip
